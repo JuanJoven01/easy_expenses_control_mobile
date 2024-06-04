@@ -1,3 +1,4 @@
+import 'package:easy_expenses/widgets/manage_categories.dart';
 import "package:flutter/material.dart";
 
 class ExpensesManagerScreen extends StatefulWidget {
@@ -12,7 +13,7 @@ class _ExpensesManagerScreenState extends State<ExpensesManagerScreen> {
   Widget build(BuildContext context) {
     return (const Scaffold(
       body: Center(
-        child: Text('Expenses Manager'),
+        child: ManageCategories(),
       ),
     ));
   }
