@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'widgets/app_bar.dart';
+import 'widgets/bottom_navigation_bar.dart';
+import 'screens/expenses_manager_screen.dart';
+import 'screens/home_screen.dart';
+import 'screens/stats_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -8,10 +12,11 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
+  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Easy Expenses Control',
+      title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme: const ColorScheme.dark(),
         useMaterial3: true,
@@ -30,38 +35,38 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
+  int _selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MyAppBar(title: widget.title),
+      appBar: MyAppBar(
+        title: widget.title,
+      ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
-        ),
+        child: _getBodyWidget(_selectedIndex),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
+      bottomNavigationBar: MyBottomNavigationBar(
+        onIndexChanged: (index) {
+          setState(() {
+            _selectedIndex = index; // Actualiza el índice seleccionado en MyApp
+          });
+        },
       ),
-      // This trailing comma makes auto-formatting nicer for build methods.
     );
+  }
+
+  Widget _getBodyWidget(int index) {
+    // Devuelve el widget del cuerpo según el índice seleccionado
+    switch (index) {
+      case 0:
+        return const MyHomeScreen();
+      case 1:
+        return const ExpensesManagerScreen();
+      case 2:
+        return const StatsScreen();
+      default:
+        return Container();
+    }
   }
 }
